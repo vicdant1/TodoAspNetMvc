@@ -1,0 +1,17 @@
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\bin\Debug\net8.0\TodoApp.Infra.Data.deps.json
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\bin\Debug\net8.0\TodoApp.Infra.Data.runtimeconfig.json
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\bin\Debug\net8.0\TodoApp.Infra.Data.dll
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\bin\Debug\net8.0\TodoApp.Infra.Data.pdb
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\bin\Debug\net8.0\TodoApp.Domain.dll
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\bin\Debug\net8.0\TodoApp.Domain.pdb
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.csproj.AssemblyReference.cache
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.AssemblyInfoInputs.cache
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.AssemblyInfo.cs
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.csproj.CoreCompileInputs.cache
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.csproj.CopyComplete
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.dll
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\refint\TodoApp.Infra.Data.dll
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.pdb
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.genruntimeconfig.cache
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\ref\TodoApp.Infra.Data.dll

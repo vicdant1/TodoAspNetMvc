@@ -1,0 +1,44 @@
+﻿@model TodoApp.Domain.Entities.Task
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="d-flex align-items-center justify-content-between">
+
+    <h1>Task Details <a asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pencil fs-4"></i></a></h1>
+    <a asp-action="Index" asp-controller="Task" class="fs-2 text-decoration-none"><i class="bi bi-arrow-left"></i> Back</a>
+</div>
+<div>
+    <h4>Title:</h4>
+    <p>@Model.Title</p>
+</div>
+
+<div>
+    <h4>Description:</h4>
+    <p>@Model.Description</p>
+</div>
+
+<div>
+    <h4>Category:</h4>
+    <p>@Model.Category</p>
+</div>
+
+<div>
+    <h4>Priority:</h4>
+    <p>@Model.Priority</p>
+</div>
+
+<div>
+    <h4>Deadline:</h4>
+    <p>@Model.Deadline</p>
+</div>
+
+<div>
+    <h4>Creation Time:</h4>
+    <p>@Model.CreationTime</p>
+</div>
+
+<div>
+    <h4>Completed:</h4>
+    <p>@(Model.IsCompleted ? "Yes" : "No")</p>
+</div>
