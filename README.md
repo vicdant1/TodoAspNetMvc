@@ -59,10 +59,18 @@ To run this application locally, follow these steps:
 
    ```json
    {
+     "Logging": {
+       "LogLevel": {
+         "Default": "Information",
+         "Microsoft.AspNetCore": "Warning"
+       }
+     },
+     "AllowedHosts": "*",
      "ConnectionStrings": {
-       "DefaultConnection": "Server=localhost;Database=TodoAppDb;User=yourusername;Password=yourpassword;"
+       "Default": "Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=TodoApp;Persist Security Info=True;Connection Timeout = 150;"
      }
    }
+
    ```
 
 5. Run `dotnet ef database update` command or open NuGet Package Manager and run `Update-Database` command
