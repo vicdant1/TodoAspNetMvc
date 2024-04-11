@@ -5,6 +5,8 @@ This repository contains a simple Todo application built using ASP.NET Core MVC.
 ## Feature video (click on thumbnail to go there)
 [![TodoApp Cloud Plus Plus](https://img.youtube.com/vi/AmU7T4pXdmg/maxresdefault.jpg)](https://www.youtube.com/watch?v=AmU7T4pXdmg)
 
+- Some inputs do not appear in the recording because OBS only captures the browser window. When the project is run locally, the inputs will appear.
+
 ## Stack and Approaches
 
 ### Stack
