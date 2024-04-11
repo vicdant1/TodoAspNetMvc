@@ -55,7 +55,7 @@
 
         <div class="row mb-4 justify-content-end">
             <div class="col-12 col-md-3">
-                <button class="btn btn-primary w-100" onclick="test()"><i class="bi bi-envelope-at-fill"></i> Send Email</button>
+                <button class="btn btn-primary w-100" onclick="handleSendEmail()"><i class="bi bi-envelope-at-fill"></i> Send Email</button>
             </div>
         </div>
 
@@ -96,10 +96,6 @@
                                     <option value="False">No</option>
                                 </select>
                             </div>
-
-                            <h5 class="card-title">Set swal confirmation - delete</h5>
-                            <h5 class="card-title">Set swal confirmation - set complete</h5>
-
                             <button type="submit" class="btn btn-primary mt-2 w-100"><i class="bi bi-search"></i> Search</button>
                         </form>
                     </div>
@@ -109,7 +105,7 @@
                 <div class="row" id="filteredTasks">
                     @foreach (var task in Model.Tasks)
                     {
-                        <div class="col-md-4 mb-3 task-card" data-category="@task.Category" data-priority="@task.Priority" data-completed="@task.IsCompleted">
+                        <div class="col-sm-6 col-lg-4 mb-3 task-card" data-category="@task.Category" data-priority="@task.Priority" data-completed="@task.IsCompleted">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title text-truncate" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="@(task.Title)">@task.Title</h5>
@@ -119,19 +115,15 @@
                                         <a asp-controller="Task" asp-action="Details" asp-route-id="@(task.Id)" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See details"><i class="bi bi-info-circle"></i></a>
                                         @if (!task.IsCompleted)
                                         {
-                                            <form asp-controller="Task" asp-action="MarkTaskAsCompleted" asp-route-id="@(task.Id)" method="post">
-                                                <button type="submit" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mark as completed">
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                </button>
-                                            </form>
+                                            <button type="button" onclick="handleMarkTaskAsCompleted(@task.Id)" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Mark as completed">
+                                                <i class="bi bi-check-circle-fill"></i>
+                                            </button>
                                         }
                                         <a asp-controller="Task" asp-action="Edit" asp-route-id="@(task.Id)" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit task"><i class="bi bi-pencil"></i></a>
 
-                                        <form asp-controller="Task" asp-action="Delete" asp-route-id="@(task.Id)" method="post">
-                                            <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete task">
-                                                <i class="bi bi-trash-fill"></i>
-                                            </button>
-                                        </form>
+                                        <button type="button" onclick="handleDelete(@task.Id)" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete task">
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="card-footer text-truncate">
@@ -160,6 +152,10 @@
                                     }
                                     <span class="@priorityBadgeClass">@task.Priority</span>
                                     <span class="@categoryBadgeClass">@task.Category</span>
+                                    @if (task.IsCompleted)
+                                    {
+                                        <i class="bi bi-check-circle-fill float-end text-success"></i>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -185,9 +181,97 @@
 
 @section Scripts {
     <script>
-        function test() {
-            alert('send email with tasks (as filtered)')
+
+        function handleSendEmail() {
+            Swal.fire({
+                title: "Submit your email address",
+                input: "text",
+                inputAttributes: {
+                    autocapitalize: "off"
+                },
+                showCancelButton: true,
+                confirmButtonText: "Send",
+                confirmButtonColor: "#0d6efd",
+                showLoaderOnConfirm: true,
+                preConfirm: async (email) => {
+                    try {
+                        if (!isEmailValid(email))
+                            throw new Error("Invalid email!")
+
+                        $.ajax({
+                            url: '/Task/SendTasksEmail',
+                            method: 'POST',
+                            data: {
+                                email
+                            }
+
+                        })
+                    } catch (error) {
+                        Swal.showValidationMessage(`Request failed: ${error}`);
+                    }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: "Email sent!",
+                        text: "You will receive in a few moments an Email containing informations about the tasks.",
+                        icon: "success"
+                    });
+                }
+            });
         }
+
+        function handleDelete(taskId) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#0d6efd",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/Task/Delete',
+                        method: 'POST',
+                        data: {
+                            id: taskId
+                        },
+                        success: function () {
+                            window.location.reload()
+                        }
+                    })
+                }
+            });
+        }
+
+        function handleMarkTaskAsCompleted(taskId) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This will make task be turned into 'Completed' status.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#0d6efd",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, do it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/Task/MarkTaskAsCompleted',
+                        method: 'POST',
+                        data: {
+                            id: taskId
+                        },
+                        success: function () {
+                            window.location.reload()
+                        }
+                    })
+                }
+            });
+        }
+
         $(document).ready(function () {
             $('#filterForm').submit(function (e) {
                 e.preventDefault();
@@ -195,12 +279,10 @@
                 var priority = $('#priorityFilter').val();
                 var completed = $('#completedFilter').val();
 
-                console.log(completed)
                 $('.task-card').each(function () {
                     var cardCategory = $(this).data('category');
                     var cardPriority = $(this).data('priority');
                     var cardCompleted = $(this).data('completed');
-                    console.log(cardCompleted)
 
                     if ((category === '' || category === 'All' || cardCategory === category) &&
                         ((priority === '' || priority === 'All' || cardPriority === priority)) &&

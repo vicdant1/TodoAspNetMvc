@@ -1,4 +1,5 @@
-﻿using TodoApp.Application.Interfaces;
+﻿using TodoApp.Application.Email;
+using TodoApp.Application.Interfaces;
 using TodoApp.Domain.Enums;
 using TodoApp.Domain.Interfaces;
 
@@ -7,10 +8,12 @@ namespace TodoApp.Application.Services
     public class TaskService : ITaskService
     {
         private readonly ITaskRepository _taskRepository;
+        private readonly IEmailService _emailService;
 
-        public TaskService(ITaskRepository taskRepository)
+        public TaskService(ITaskRepository taskRepository, IEmailService emailService)
         {
             _taskRepository = taskRepository;
+            _emailService = emailService;
         }
 
         public Task<Domain.Entities.Task> CreateTask(Domain.Entities.Task task)
@@ -43,6 +46,11 @@ namespace TodoApp.Application.Services
             return _taskRepository.GetTasksByPriority(taskPriority);
         }
 
+        public Task<Domain.Entities.Task> UpdateTask(Domain.Entities.Task task)
+        {
+            return _taskRepository.UpdateTask(task);
+        }
+
         public async Task<Domain.Entities.Task> MarkTaskAsCompleted(int id)
         {
             var task = await _taskRepository.GetAsync(id);
@@ -56,9 +64,16 @@ namespace TodoApp.Application.Services
             return task;
         }
 
-        public Task<Domain.Entities.Task> UpdateTask(Domain.Entities.Task task)
+        public async Task SendTasksEmail(string emailTo)
         {
-            return _taskRepository.UpdateTask(task);
+            var tasks = await GetAllTasks();
+            if (tasks == null)
+                return;
+
+            var subject = "🤖 Tasks Reports";
+            var body = TaskReportEmail.GenerateEmailBody(tasks);
+
+            await _emailService.SendEmailAsync(emailTo, subject, body);
         }
     }
 }

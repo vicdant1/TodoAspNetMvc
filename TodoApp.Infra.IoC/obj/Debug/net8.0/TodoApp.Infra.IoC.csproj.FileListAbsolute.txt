@@ -19,3 +19,4 @@ C:\_projects\TodoAspNetMvc\TodoApp.Infra.IoC\obj\Debug\net8.0\TodoApp.Infra.IoC.
 C:\_projects\TodoAspNetMvc\TodoApp.Infra.IoC\obj\Debug\net8.0\ref\TodoApp.Infra.IoC.dll
 C:\_projects\TodoAspNetMvc\TodoApp.Infra.IoC\bin\Debug\net8.0\TodoApp.Infra.IoC.runtimeconfig.json
 C:\_projects\TodoAspNetMvc\TodoApp.Infra.IoC\obj\Debug\net8.0\TodoApp.Infra.IoC.genruntimeconfig.cache
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.IoC\obj\Debug\net8.0\TodoApp.Infra.IoC.sourcelink.json

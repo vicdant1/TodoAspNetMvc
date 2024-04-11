@@ -1,12 +1,12 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TodoApp.Infra.Data.Context;
-using Microsoft.EntityFrameworkCore;
-using TodoApp.Domain.Interfaces;
-using TodoApp.Infra.Data.Repositories;
 using TodoApp.Application.Interfaces;
 using TodoApp.Application.Services;
+using TodoApp.Domain.Interfaces;
+using TodoApp.Infra.Data.Context;
+using TodoApp.Infra.Data.Repositories;
 
 namespace TodoApp.Infra.IoC
 {
@@ -20,8 +20,9 @@ namespace TodoApp.Infra.IoC
             ));
 
             services.AddScoped<ITaskRepository, TaskRepository>();
-            services.AddScoped<ITaskService, TaskService>();
 
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IEmailService, EmailService>();
 
             return services;
         }

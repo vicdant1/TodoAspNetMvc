@@ -13,3 +13,4 @@ C:\_projects\TodoAspNetMvc\TodoApp.Application\obj\Debug\net8.0\TodoApp.Applicat
 C:\_projects\TodoAspNetMvc\TodoApp.Application\obj\Debug\net8.0\refint\TodoApp.Application.dll
 C:\_projects\TodoAspNetMvc\TodoApp.Application\obj\Debug\net8.0\TodoApp.Application.pdb
 C:\_projects\TodoAspNetMvc\TodoApp.Application\obj\Debug\net8.0\ref\TodoApp.Application.dll
+C:\_projects\TodoAspNetMvc\TodoApp.Application\obj\Debug\net8.0\TodoApp.Application.sourcelink.json

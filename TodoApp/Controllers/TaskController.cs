@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.Framework;
+using TodoApp.Application.DTOs;
 using TodoApp.Application.Interfaces;
 using TodoApp.Application.ViewModels;
 using TodoApp.Domain.Enums;
@@ -16,10 +16,7 @@ namespace TodoApp.Controllers
 
         public async Task<ActionResult> Index()
         {
-            // fazer validacao para tasks nulas na view
             var tasks = await _taskService.GetAllTasks();
-
-
             return View(new TasksViewModel
             {
                 Tasks = tasks,
@@ -46,7 +43,6 @@ namespace TodoApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Domain.Entities.Task task)
         {
             try
@@ -75,7 +71,6 @@ namespace TodoApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, Domain.Entities.Task task)
         {
             try
@@ -90,7 +85,6 @@ namespace TodoApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> MarkTaskAsCompleted(int id)
         {
             try
@@ -116,6 +110,15 @@ namespace TodoApp.Controllers
             {
                 return View();
             }
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> SendTasksEmail(SendEmailDto input)
+        {
+            await _taskService.SendTasksEmail(input.Email);
+
+            return Ok();
         }
     }
 }
