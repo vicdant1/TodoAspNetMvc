@@ -49,7 +49,9 @@ namespace TodoApp.Controllers
         {
             try
             {
-                if(!ModelState.IsValid)
+                ModelState.Remove("UserId"); // Ugly solution, create another VM should be greater than this
+                ModelState.Remove("User"); // Ugly solution, create another VM should be greater than this
+                if (!ModelState.IsValid)
                     return View(task);
 
                 await _taskService.CreateTask(task);

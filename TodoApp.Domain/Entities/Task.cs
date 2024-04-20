@@ -1,4 +1,5 @@
 ﻿using TodoApp.Domain.Enums;
+using TodoApp.Domain.Identity;
 
 namespace TodoApp.Domain.Entities
 {
@@ -13,6 +14,7 @@ namespace TodoApp.Domain.Entities
         public DateTime CreationTime { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsDeleted { get; set; }
-
+        public AppUser User { get; set; }
+        public string UserId { get; set; }
     }
 }

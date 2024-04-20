@@ -48,6 +48,7 @@ namespace TodoApp.Infra.IoC
 
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddHttpContextAccessor();
 
             return services;
         }
