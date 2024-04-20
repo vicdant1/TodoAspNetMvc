@@ -15,3 +15,4 @@ C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\refint\TodoApp.In
 C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.pdb
 C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.genruntimeconfig.cache
 C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\ref\TodoApp.Infra.Data.dll
+C:\_projects\TodoAspNetMvc\TodoApp.Infra.Data\obj\Debug\net8.0\TodoApp.Infra.Data.sourcelink.json

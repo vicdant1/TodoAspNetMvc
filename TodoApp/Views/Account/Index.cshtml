@@ -1,0 +1,94 @@
+﻿@{
+    ViewData["Title"] = "Authentication";
+}
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-tab-pane" type="button" role="tab" aria-controls="login-tab-pane" aria-selected="true">Login</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register-tab-pane" type="button" role="tab" aria-controls="register-tab-pane" aria-selected="false">Register</button>
+    </li>
+</ul>
+<div class="tab-content mt-2" id="myTabContent">
+    <div class="tab-pane fade show active" id="login-tab-pane" role="tabpanel" aria-labelledby="login-tab" tabindex="0">
+        <partial name="_Login"/>
+    </div>
+    <div class="tab-pane fade" id="register-tab-pane" role="tabpanel" aria-labelledby="register-tab" tabindex="0">
+        <partial name="_Register" />
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('#loginForm').on('submit', function (e) {
+                e.preventDefault();
+                authenticate();
+            })
+
+            $("#registerForm").on('submit', function (e) {
+                e.preventDefault();
+                register();
+            })
+        })
+
+        function authenticate() {
+            var formData = new FormData(document.querySelector('#loginForm'));
+
+            $.ajax({
+                url: '/Account/Login',
+                processData: false,
+                method: 'POST',
+                contentType: false,
+                data: formData,
+                success: function (data) {
+                    $(location).attr('href', '/Task/');
+                },
+                error: function (err) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Login failed",
+                        text: err.responseText,
+                        confirmButtonColor: '#0d6efd'
+                    });
+                }
+            });
+        }
+
+        function register() {
+            var formData = new FormData(document.querySelector('#registerForm'));
+            $.ajax({
+                url: '/Account/Register',
+                processData: false,
+                method: 'POST',
+                contentType: false,
+                data: formData,
+                success: function (data) {
+                    Swal.fire({
+                        title: "Account successfully created",
+                        text: "You can now login and enjoy our features",
+                        icon: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: "#0d6efd",
+                        confirmButtonText: "Go ahead!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $(location).attr('href', '/Account/');
+                        }
+                    });
+                },
+                error: function (err) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Register failed",
+                        text: err.responseText,
+                        confirmButtonColor: '#0d6efd'
+                    });
+                }
+            });
+        }
+    </script>
+}
