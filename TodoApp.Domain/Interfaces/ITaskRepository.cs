@@ -11,5 +11,6 @@ namespace TodoApp.Domain.Interfaces
         Task<IEnumerable<Entities.Task>> GetTasksByPriority(ETaskPriority taskPriority);
         Task<Entities.Task> UpdateTask(Entities.Task task);
         Task<Entities.Task> DeleteTask(int id);
+        Task<IEnumerable<Entities.Task>> GetAllUsersTasks();
     }
 }

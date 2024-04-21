@@ -51,6 +51,11 @@ namespace TodoApp.Infra.Data.Repositories
             return await _context.Tasks.Where(task => !task.IsDeleted && task.UserId.Equals(_currentUserId)).ToListAsync();
         }
 
+        public async Task<IEnumerable<Domain.Entities.Task>> GetAllUsersTasks()
+        {
+            return await _context.Tasks.Include(t => t.User).ToListAsync();
+        }
+
         public async Task<Domain.Entities.Task> GetAsync(int id)
         {
             return await _context.Tasks.Where(task => task.Id == id && !task.IsDeleted && task.UserId.Equals(_currentUserId)).FirstOrDefaultAsync();

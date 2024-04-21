@@ -31,6 +31,11 @@ namespace TodoApp.Application.Services
             return _taskRepository.GetAllTasks();
         }
 
+        public Task<IEnumerable<Domain.Entities.Task>> GetAllUsersTasks()
+        {
+            return _taskRepository.GetAllUsersTasks();
+        }
+
         public Task<Domain.Entities.Task> GetAsync(int id)
         {
             return _taskRepository.GetAsync(id);

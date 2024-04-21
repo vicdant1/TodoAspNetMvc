@@ -13,5 +13,7 @@ namespace TodoApp.Application.Interfaces
         Task<Domain.Entities.Task> UpdateTask(Domain.Entities.Task task);
         Task<Domain.Entities.Task> MarkTaskAsCompleted(int id);
         Task<Domain.Entities.Task> DeleteTask(int id);
+
+        Task<IEnumerable<Domain.Entities.Task>> GetAllUsersTasks();
     }
 }

@@ -1,7 +1,61 @@
-﻿@{
-    ViewData["Title"] = "Admin Dash";
+﻿@using TodoApp.Application.ViewModels
+@model DashboardViewModel;
+@{
+    ViewData["Title"] = "Admin Dashboard";
 }
 
-<div>
-    Dash
+<div class="container">
+    <h4>Dashboard</h4>
+    <span>Here you can see user's activities such as each user created tasks.</span>
+    <hr />
+
+    @if (Model != null)
+    {
+        <div class="accordion" id="accordionContainer">
+            @{
+                int taskIndex = 0;
+                foreach (var userTasks in Model.Tasks)
+                {
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@(taskIndex)" aria-expanded="false" aria-controls="collapse-@(taskIndex)">
+                                @userTasks.Tasks.First().User.UserName
+                            </button>
+                        </h2>
+                        <div id="collapse-@(taskIndex)" class="accordion-collapse collapse show" data-bs-parent="#accordionContainer">
+                            <div class="accordion-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <i class="bi bi-calculator"></i> Total @userTasks.TasksCount
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-house"></i> @userTasks.HomeCount
+                                        <i class="bi bi-briefcase"></i> @userTasks.WorkCount
+                                        <i class="bi bi-person"></i> @userTasks.PersonalCount
+                                        <i class="bi bi-cart-plus"></i> @userTasks.ShoppingCount
+                                    </div>
+                                </div>
+
+                                <hr/>
+                                <div class="row">
+                                    @foreach(var task in userTasks.Tasks)
+                                    {
+                                        // Put task component here (create partial view)
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    taskIndex++;
+                }
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center display-4 mt-4">
+            No activity yet
+        </div>
+    }
 </div>
