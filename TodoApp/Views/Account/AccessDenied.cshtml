@@ -1,4 +1,14 @@
-﻿@page
-@model TodoApp.Views.Account.AccessDeniedModel
+﻿
 @{
+    ViewData["Title"] = "Access denied";
 }
+
+<div class="row align-items-center">
+    <div class="col-md-6">
+        <img class="img-fluid" alt="Access denied" src="~/images/access_denied.svg" />
+
+    </div>
+    <div class="col-md-6">
+        <p class="display-5 mt-4">Apparently you should not be here... <a asp-action="Index" asp-controller="Home">Back Home</a></p>
+    </div>
+</div>
