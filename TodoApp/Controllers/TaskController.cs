@@ -19,9 +19,23 @@ namespace TodoApp.Controllers
         public async Task<ActionResult> Index()
         {
             var tasks = await _taskService.GetAllTasks();
+
+            #region Sorting tasks
+            // For some reason, query maker is not allowing sort by incomplete tasks after date sorting
+            var incompleteTasks = tasks.Where(t => !t.IsCompleted)
+                               .OrderBy(t => t.Deadline)
+                               .ToList();
+
+            var completedTasks = tasks.Where(t => t.IsCompleted)
+                                      .OrderBy(t => t.Deadline)
+                                      .ToList();
+
+            var sortedTasks = incompleteTasks.Concat(completedTasks);
+            #endregion
+
             return View(new TasksViewModel
             {
-                Tasks = tasks,
+                Tasks = sortedTasks,
                 HomeCount = tasks.Count(task => task.Category == ETaskCategory.Home),
                 PersonalCount = tasks.Count(task => task.Category == ETaskCategory.Personal),
                 ShoppingCount = tasks.Count(task => task.Category == ETaskCategory.Shopping),

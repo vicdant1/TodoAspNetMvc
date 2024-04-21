@@ -4,6 +4,39 @@
 
 @{
     ViewData["Title"] = "Tasks";
+
+    string GetPriorityBadgeClass(ETaskPriority priority)
+    {
+        switch (priority)
+        {
+            case ETaskPriority.Critical:
+                return "badge rounded-pill outlined-badge-danger";
+            case ETaskPriority.High:
+                return "badge rounded-pill outlined-badge-warning";
+            case ETaskPriority.Normal:
+                return "badge rounded-pill outlined-badge-info";
+            case ETaskPriority.Low:
+                return "badge rounded-pill outlined-badge-success";
+            default:
+                return "badge rounded-pill outlined-badge-primary";
+        }
+    }
+
+    string GetDeadlineDisplayText(DateTime deadline)
+    {
+        if(DateTime.Now.Date == deadline.Date)
+            return deadline.ToString("HH:mm");
+
+        return deadline.ToString("dd/MM/yyyy");
+    }
+
+    string GetAlertBorderClass(TodoApp.Domain.Entities.Task task)
+    {
+        if (!task.IsCompleted && DateTime.Now.Date == task.Deadline.Date)
+            return "border border-danger";
+
+        return string.Empty;
+    }
 }
 
 <div class="container">
@@ -106,7 +139,7 @@
                     @foreach (var task in Model.Tasks)
                     {
                         <div class="col-sm-6 col-lg-4 mb-3 task-card" data-category="@task.Category" data-priority="@task.Priority" data-completed="@task.IsCompleted">
-                            <div class="card">
+                            <div class="card @(GetAlertBorderClass(task))">
                                 <div class="card-body">
                                     <h5 class="card-title text-truncate" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="@(task.Title)">@task.Title</h5>
                                     <p class="card-text text-truncate">@task.Description</p>
@@ -126,35 +159,18 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="card-footer text-truncate">
-                                    @{
-                                        string categoryBadgeClass = "badge rounded-pill outlined-badge-secondary";
-                                        string priorityBadgeClass = "";
-
-                                        switch (task.Priority)
-                                        {
-                                            case ETaskPriority.Critical:
-                                                priorityBadgeClass = "badge rounded-pill outlined-badge-danger";
-                                                break;
-                                            case ETaskPriority.High:
-                                                priorityBadgeClass = "badge rounded-pill outlined-badge-warning";
-                                                break;
-                                            case ETaskPriority.Normal:
-                                                priorityBadgeClass = "badge rounded-pill outlined-badge-info";
-                                                break;
-                                            case ETaskPriority.Low:
-                                                priorityBadgeClass = "badge rounded-pill outlined-badge-success";
-                                                break;
-                                            default:
-                                                priorityBadgeClass = "badge rounded-pill outlined-badge-primary";
-                                                break;
-                                        }
-                                    }
-                                    <span class="@priorityBadgeClass">@task.Priority</span>
-                                    <span class="@categoryBadgeClass">@task.Category</span>
+                                <div class="card-footer text-truncate d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <span class="@GetPriorityBadgeClass(task.Priority)">@task.Priority</span>
+                                        <span class="badge rounded-pill outlined-badge-secondary">@task.Category</span>
+                                    </div>
                                     @if (task.IsCompleted)
                                     {
-                                        <i class="bi bi-check-circle-fill float-end text-success"></i>
+                                        <i class="bi bi-check-circle-fill float-end text-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Completed task"></i>
+                                    }
+                                    else
+                                    {
+                                        <div>@GetDeadlineDisplayText(task.Deadline)</div>
                                     }
                                 </div>
                             </div>
